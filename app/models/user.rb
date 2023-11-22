@@ -1,14 +1,14 @@
-# frozen_string_literal: true
+class User < ApplicationRecord
+  include Devise::JWT::RevocationStrategies::JTIMatcher
 
-class User < ActiveRecord::Base
-  extend Devise::Models
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
-  include DeviseTokenAuth::Concerns::User
+  devise :database_authenticatable, :registerable, :validatable,
+         :jwt_authenticatable, jwt_revocation_strategy: self
 
-  validates :full_name, presence: true
+  validates :name, presence: true
+  validates :email, presence: true, uniqueness: true
+  validates :password, presence: true
 
-  has_many :user_codes, dependent: :destroy
+  def jwt_payload
+    super.merge('foo' => 'bar')
+  end
 end

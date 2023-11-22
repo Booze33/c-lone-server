@@ -5,3 +5,10 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+categories = Category.create([{ name: "Action"},
+{ name: "Romance"}, { name: "Comedy"}, { name: "Drama"}, {name: "Fiction"},
+{name:"Horror"} ,  {name: 'Sci-fi'}, {name:'Thriller'},
+{name: 'Mystery'}, {name: 'Fantasy'}, {name: 'Adventure'},
+{name: 'Crime'}, {name: 'Documentary'}, {name: 'History'},
+])
