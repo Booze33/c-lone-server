@@ -9,10 +9,6 @@ gem "rails", "~> 7.0.8"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 
-gem 'ruby-openai', '~> 6.3.1'
-gem 'sidekiq'
-gem 'redis'
-
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
@@ -40,8 +36,8 @@ gem "bootsnap", require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem "rack-cors"
 gem 'devise_token_auth'
-gem 'omniauth-github'
-gem 'omniauth-google-oauth2'
+# gem 'omniauth-github'
+# gem 'omniauth-google-oauth2'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
