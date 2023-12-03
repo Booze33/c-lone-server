@@ -1,4 +1,4 @@
-class CreateChatsController < ApplicationController
+class ChatsController < ApplicationController
   before_action :set_create_chat, only: %i[ show update destroy ]
 
   # GET /create_chats
