@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
-  resources :chats do
+  resources :conversations do
     resources :messages
   end
-  
   mount_devise_token_auth_for 'User', at: 'auth', controllers: {
     sessions: 'devise_token_auth/sessions'
   }

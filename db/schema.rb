@@ -1,35 +1,28 @@
-# This file is auto-generated from the current state of the database. Instead
-# of editing this file, please use the migrations feature of Active Record to
-# incrementally modify your database, and then regenerate this schema definition.
-#
-# This file is the source Rails uses to define your schema when running `bin/rails
-# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
-# be faster and is potentially less error prone than running all of your
-# migrations from scratch. Old migrations may fail to apply correctly if those
-# migrations use external dependencies or application code.
-#
-# It's strongly recommended that you check this file into your version control system.
-
-ActiveRecord::Schema[7.0].define(version: 2024_02_19_025940) do
-  # These are extensions that must be enabled in order to support this database
+ActiveRecord::Schema[7.0].define(version: 2024_02_19_124429) do
   enable_extension "plpgsql"
 
-  create_table "chats", force: :cascade do |t|
-    t.integer "sender_id", null: false
-    t.integer "receiver_id", null: false
-    t.text "content", null: false
-    t.datetime "timestamp", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
-    t.boolean "is_ai_generated", default: false, null: false
+  create_table "conversations", force: :cascade do |t|
+    t.datetime "start_time", null: false
+    t.datetime "end_time"
+    t.string "status", limit: 10, null: false
+    t.integer "participants", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["participants"], name: "index_conversations_on_participants"
   end
 
   create_table "messages", force: :cascade do |t|
-    t.integer "sender_id", null: false
-    t.integer "chat_id", null: false
-    t.text "content", null: false
+    t.string "text", limit: 500, null: false
+    t.integer "sender", null: false
+    t.integer "receiver", null: false
+    t.datetime "timestamp", null: false
+    t.string "sentiment", limit: 10
+    t.integer "conversation", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["conversation"], name: "index_messages_on_conversation"
+    t.index ["receiver"], name: "index_messages_on_receiver"
+    t.index ["sender"], name: "index_messages_on_sender"
   end
 
   create_table "users", force: :cascade do |t|
@@ -57,8 +50,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_19_025940) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
-  add_foreign_key "chats", "users", column: "receiver_id"
-  add_foreign_key "chats", "users", column: "sender_id"
-  add_foreign_key "messages", "users", column: "chat_id"
-  add_foreign_key "messages", "users", column: "sender_id"
+  add_foreign_key "conversations", "users", column: "participants"
+  add_foreign_key "messages", "conversations", column: "conversation"
+  add_foreign_key "messages", "users", column: "receiver"
+  add_foreign_key "messages", "users", column: "sender"
 end
